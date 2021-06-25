@@ -11,7 +11,7 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/posts', (req, res)=>{
-    const data = JSON.parse(fs.readFileSync('./data/tweets_2021-06-22.json'));
+    const data = JSON.parse(fs.readFileSync('./pythonCode/data/tweets_2021-06-22.json'));
     res.json(data);
 })
 
