@@ -22,6 +22,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
@@ -10,12 +11,8 @@ router.get('/', (req, res)=>{
 })
 
 router.get('/posts', (req, res)=>{
-    axios.get(`${PostAPI}/posts`).then(posts=>{
-        res.status(200).json(posts.data);
-    })
-    .catch(error =>{
-        res.status(500).send(error);
-    })
+    const data = JSON.parse(fs.readFileSync('./data/tweets_2021-06-22.json'));
+    res.json(data);
 })
 
 module.exports = router;

@@ -6,21 +6,33 @@
     </form>
 </div>
 
-<table class="table table-striped mt-5">
+<table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">User Id</th>
-        <th scope="col">Id</th>
-        <th scope="col">Title</th>
-        <th scope="col">Body</th>
+        <th scope="col">id</th>
+        <th scope="col">date</th>
+        <th scope="col">text</th>
+        <th scope="col">user_id</th>
+        <th scope="col">user_name</th>
+        <th scope="col">location</th>
+        <th scope="col">retweeted</th>
+        <th scope="col">RT_text</th>
+        <th scope="col">RT_user_id</th>
+        <th scope="col">RT_user_name</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let post of posts">
-        <th>{{post.userId}}</th>
-        <td>{{post.Id}}</td>
-        <td>{{post.title}}</td>
-        <td>{{post.body}}</td>
+        <td>{{post.id}}</td>
+        <td>{{post.date}}</td>
+        <td>{{post.text}}</td>
+        <td>{{post.user_id}}</td>
+        <td>{{post.user_name}}</td>
+        <td>{{post.location}}</td>
+        <td>{{post.retweeted}}</td>
+        <td>{{post.RT_text}}</td>
+        <td>{{post.RT_user_id}}</td>
+        <td>{{post.RT_user_name}}</td>
       </tr>
     </tbody>
   </table>
