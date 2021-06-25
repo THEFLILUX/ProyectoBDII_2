@@ -13,6 +13,12 @@ import regex
 #nltk.download('punkt')
 #nltk.download('stopwords')
 
+class tokenObject:
+    def __init__(self):
+        self.tf_per_tweet = {} # Term frecuency on text per tweet
+        self.df = 0 # Total tweet frecuency
+        self.tf = 0 # Total term frecuency
+
 def stopwords_stemmer(filename_tweet_text):
     tokens = nltk.word_tokenize(filename_tweet_text)
     stoplist = stopwords.words("spanish")
@@ -31,8 +37,17 @@ def stopwords_stemmer(filename_tweet_text):
 
 json_path = './data/'
 tweets = os.listdir(json_path)
+inverted_index={}
 with open(json_path + tweets[0], encoding="utf8") as file:
     json_content = json.load(file)
-    for content in json_content:
-        tokens_clean = stopwords_stemmer(content["text"])
-        print(tokens_clean, '\n')
+    for tweet in json_content:
+        tokens_clean = stopwords_stemmer(tweet["text"])
+        for token in tokens_clean:
+            if token not in inverted_index:
+                inverted_index[token] = tokenObject()
+                inverted_index[token].tf += 1
+                if tweet["id"] not in inverted_index[token].tf_per_tweet:
+                    inverted_index[token].tf_per_tweet[tweet["id"]] = 1
+                    inverted_index[token].df += 1
+                else:
+                    inverted_index[token].tf_per_tweet[tweet["id"]] += 1
