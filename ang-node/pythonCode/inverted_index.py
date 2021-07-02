@@ -51,3 +51,41 @@ with open(json_path + tweets[0], encoding="utf8") as file:
                     inverted_index[token].df += 1
                 else:
                     inverted_index[token].tf_per_tweet[tweet["id"]] += 1
+
+
+
+def get_frecuency_terms(terms):
+    terms_dict = dict()
+    for term in terms:
+        if term not in terms_dict:
+            terms_dict[term] = 1
+        else:
+            terms_dict[term] += 1
+    return terms_dict
+
+##
+#   {   
+#       keiko : { 12312312: 3, 421412412, 6},
+#       tramposa: {12312312 : 1, 3123124: 5}        
+#        
+#   }
+#  
+##
+
+def readTweets(tweets):
+    term_dict = dict()
+    for tweet in tweets:
+        token_clean = stopwords_stemmer(tweet["text"])
+        id_tweet = tweet["id"] # los id son únicos?
+        terms_with_frequency = get_frecuency_terms(token_clean)
+        for term, freq in terms_with_frequency:
+            if(term not in term_dict):
+                term_dict[term] = dict()
+                term_dict[term][id_tweet] = freq
+            else:
+                term_dict[term][id_tweet] = freq
+    return term_dict
+
+# versión 2
+# Using variable global
+
