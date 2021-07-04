@@ -1,6 +1,7 @@
 import os
 import nltk 
 import json
+import sys
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import SnowballStemmer
@@ -153,3 +154,8 @@ def retrieve_tweets(query,k):
         docId = tuples[1]   # tweetId
         res.append(json.loads(retrieve_tweet(docId)))
     return json.dumps(res)
+
+result_data = retrieve_tweets(str(sys.argv[1]),9)
+result_data = json.loads(result_data)
+with open('result_db.json', 'w') as file:
+    json.dump(result_data, file)
