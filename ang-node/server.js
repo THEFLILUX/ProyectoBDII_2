@@ -11,15 +11,16 @@ app.use(express.static(path.join(__dirname, 'dist/ang-node')));
 
 app.use('/routes', routes);
 
-app.get('*', (req, res)=>{
+app.get('/posts', (req, res)=>{
     res.sendFile(path.join(__dirname, 'dist/ang-node/index.html'))
 })
 
-app.post('/send', urlencodedParser, (req, res)=>{
+app.get('/send', (req, res)=>{
+    res.sendFile(path.join(__dirname, 'dist/ang-node/index.html'))
     //const obj = JSON.parse(JSON.stringify(req.body));
-    const obj = JSON.parse(JSON.stringify(req.body));
+    /*const obj = JSON.parse(JSON.stringify(req.body));
     //console.log(obj.word);
-    const childPython = spawn('python', ['./Proy2/main.py', obj.word])
+    const childPython = spawn('python', ['./pythonCode/inverted_index.py', obj.word])
 
     childPython.stdout.on('data', (data) => {
         console.log(`${data}`);
@@ -31,7 +32,7 @@ app.post('/send', urlencodedParser, (req, res)=>{
     
     childPython.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
-    });
+    });*/
 
 });
 

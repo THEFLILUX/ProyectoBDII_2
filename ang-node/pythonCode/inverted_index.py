@@ -114,7 +114,7 @@ def retrieve_tweets(query,k):
     distances = searchKNN(query,k)
     for tuples in distances:
         distance = tuples[0]
-        docId = tuples[1]   # tweetId
+        docId = tuples[1]   # tweetId
         res.append(json.loads(retrieve_tweet(docId)))
     return json.dumps(res)
 
