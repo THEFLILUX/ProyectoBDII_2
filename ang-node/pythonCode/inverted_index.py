@@ -50,13 +50,6 @@ def stopwords_stemmer(tweet_text):
 
     return tokens_clean
 
-
-def createVectorTF_IDF(tweet):
-    vector_tf_idf = np.zeros(NTerms)
-    for term_id in tweet:
-        vector_tf_idf[term_id] = tweet[term_id]
-    return vector_tf_idf
-
 def parser(query):
     query_clean = stopwords_stemmer(query)
     each_term_frequency = Counter(query_clean)
@@ -70,18 +63,25 @@ def parser(query):
             result[term_id] = tf_idf
     return result
     
-def cosine(q, doc):
-    r = np.dot(q,doc)/(np.linalg.norm(q) * np.linalg.norm(doc))
-    #if(r > 0):
-    #    print(r)
-    return r
+def cosine(q, qnorma, doc, dnorma):
+    dot = 0.0
+    for term_id in q:
+        if(term_id in doc):
+            dot += q[term_id] * doc[term_id]
+    return dot/(qnorma * dnorma)
+
+def calculateNorma(posting_list):
+    values = np.array(list(posting_list.values()))
+    return np.linalg.norm(values)
 # Nos trae los (id, cosine_value) menor a mayor. Menor distancia mayor 
 def searchKNN(query, k):
     pq = PriorityQueue()
-    v_query = createVectorTF_IDF(parser(query))
+    query = parser(query)
+    qnorma = calculateNorma(query)
     for tweet_id in tweet_termids_dict:
-        v = createVectorTF_IDF(tweet_termids_dict[tweet_id][1])
-        valor = cosine(v_query, v)
+        doc = tweet_termids_dict[tweet_id][1]
+        dnorma = tweet_termids_dict[tweet_id][2]
+        valor = cosine(query, qnorma, doc, dnorma)
         if(pq.qsize() < k):
             pq.put((valor, tweet_id))
         else:
@@ -100,7 +100,7 @@ def searchKNN(query, k):
 
 
 def retrieve_tweet(docId):
-    json_path = './data2/'
+    json_path = './data/data_elecciones/'
     filenameid = tweet_termids_dict[docId][0]
     filename = filenameid_filename_dict[filenameid]
     with open(json_path + filename, encoding="utf8") as file:
