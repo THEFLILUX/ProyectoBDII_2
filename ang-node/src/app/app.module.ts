@@ -5,6 +5,7 @@ import { PostsComponent } from './posts/posts.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import {PostsService} from './posts.service';
+import { SendComponent } from './send/send.component';
 
 const Routes = [
   {
@@ -14,13 +15,17 @@ const Routes = [
   },
   {
     path: 'posts', component: PostsComponent
+  },
+  {
+    path: 'send', component: SendComponent
   }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostsComponent
+    PostsComponent,
+    SendComponent
   ],
   imports: [
     BrowserModule,

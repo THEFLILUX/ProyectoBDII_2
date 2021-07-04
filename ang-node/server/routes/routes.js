@@ -15,9 +15,10 @@ router.get('/posts', (req, res)=>{
     res.json(data);
 })
 
-router.get("/send", function(req, res){
-    var newData = JSON.parse(fs.readFileSync('db.json'));
-    res.json(newData);
+router.get('/send', (req, res)=>{
+    const newData = JSON.parse(fs.readFileSync('./pythonCode/data/result_db.json'));
+    //res.json(newData);
+    res.json(newData)
 })
 
 module.exports = router;

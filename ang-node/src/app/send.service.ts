@@ -5,12 +5,12 @@ import { map } from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class PostsService {
+export class SendService {
 
   constructor(private http: HttpClient) { }
 
   getAllPosts() {
-    return this.http.get('/routes/posts/').pipe(map((posts) => {
+    return this.http.get('/routes/send/').pipe(map((posts) => {
       return posts;
     }));
   }
