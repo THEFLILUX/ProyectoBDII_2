@@ -15,4 +15,9 @@ router.get('/posts', (req, res)=>{
     res.json(data);
 })
 
+router.get("/send", function(req, res){
+    var newData = JSON.parse(fs.readFileSync('db.json'));
+    res.json(newData);
+})
+
 module.exports = router;
