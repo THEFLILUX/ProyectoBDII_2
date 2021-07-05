@@ -264,9 +264,9 @@ A partir de una consulta, realizamos la búsqueda de los _K_ tweets con mayor si
 
 | Consulta \ k | K = 1 | K = 5 | K = 20 | K = 100 | k = 1000 |
 |:------------:|:-----:|:-----:|:------:|:-------:|:--------:|
-| Consulta N°1 | 5.286 | 5.877 |  6.087 |  5.775  |   6.237  |
-| Consulta N°2 | 5.082 | 5.566 |  5.464 |   5.62  |   5.846  |
-| Consulta N°3 | 5.260 | 5.801 |  6.002 |  5.863  |   6.742  |
+| Consulta N°1 | 5.286s | 5.877s |  6.087s |  5.775s  |   6.237s  |
+| Consulta N°2 | 5.082s | 5.566s |  5.464s |   5.62s  |   5.846s  |
+| Consulta N°3 | 5.260s | 5.801s |  6.002s |  5.863s  |   6.742s  |
 
 </center>
 
