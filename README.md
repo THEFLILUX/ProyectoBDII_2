@@ -256,9 +256,9 @@ Realizamos una descripción de las funciones que hemos utilizado:
 ### **3.1 Experimento**
 A partir de una consulta, realizamos la búsqueda de los _K_ tweets con mayor similitud con respecto a ella. Donde el valor de _K_ se encuentra variando.
 
-* Consulta N°1 = _"Keikoy Fujimori y Pedro Castillo son candidatos a la presidencia"_
-* Consulta N°2 = _"Keiko lidera las encuestas"_
-* Consulta N°3 = _"Pedro Castillo es un comunista"_
+* Consulta N°1 = _"Los congresistas fujimoristas son delincuentes"_
+* Consulta N°2 = _"Necesitamos autoridades honestas"_
+* Consulta N°3 = _"Daniel Urresti lidera las encuestas"_
   
 | Consulta \ k | K = 1 | K = 5 | K = 20 | K = 100 | k = 1000 |
 |--------------|-------|-------|--------|---------|----------|
