@@ -260,12 +260,16 @@ A partir de una consulta, realizamos la búsqueda de los _K_ tweets con mayor si
 * Consulta N°2 = _"Necesitamos autoridades honestas"_
 * Consulta N°3 = _"Daniel Urresti lidera las encuestas"_
   
+<center>
+
 | Consulta \ k | K = 1 | K = 5 | K = 20 | K = 100 | k = 1000 |
-|--------------|-------|-------|--------|---------|----------|
-| Consulta N°1 |       |       |        |         |          |
-| Consulta N°2 |       |       |        |         |          |
-| Consulta N°3 |       |       |        |         |          |
+|:------------:|:-----:|:-----:|:------:|:-------:|:--------:|
+| Consulta N°1 | 5.286 | 5.877 |  6.087 |  5.775  |   6.237  |
+| Consulta N°2 | 5.082 | 5.566 |  5.464 |   5.62  |   5.846  |
+| Consulta N°3 | 5.260 | 5.801 |  6.002 |  5.863  |   6.742  |
+
+</center>
 
 ### **3.2 Conclusiones**
-* La búsqueda de los _K_ tweets con mayor similitud es eficiente puesto que no demora mas de x segundos para encontrarlos, a pesar de tener buscar entre 480 mil tweets
+* La búsqueda de los _K_ tweets con mayor similitud es posible considerarla eficiente puesto que consigue los resultados en un tiempo no menor a 7 segundos a pesar que tiene que comparar la similitud entre 480 mil tweets.
 * Asimismo, el tamaño de la consulta no afecta al rendimiento de la búsqueda.
