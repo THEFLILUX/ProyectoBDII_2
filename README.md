@@ -213,3 +213,59 @@ En una tabla del html, llamamos a cada elemento del JSON para que en cada fila i
     </tbody>
   </table>
 ```
+
+## **2. BackEnd**
+
+### **2.1 Observaciones:**
+* Como estamos trabajando con varios archivos de tipo json, donde cada uno contiene varios tweets, es necesario asignar un identificador a cada archivo. Por lo que, vamos a apoyarnos de un diccionario, donde la _key_ es el identificador del archivo y el _value_ es el nombre del archivo.
+
+* Hemos trabajado con 479 945 tweets.
+
+* Hemos creado el índice invertido a partir 128 562 términos únicos. 
+
+* A cada término le hemos asignado un identificador, por lo que nos apoyamos de un diccionario donde la _key_ es el término y el _value_ es el ID del término.
+
+* Como un tweet se encuentra en un archivo de tipo json; asimismo, tiene su longitud (norma) y tiene un conjunto de términos donde cada término tiene su peso tf.idf es necesario realizar un mapeo de estos elementos de un tweet con un diccionario. En este diccionario, la _key_ es el ID del tweet y el _value_ es la lista de los elementos mencionados anteriormente. 
+
+* Cada término aparece en diferentes tweets por lo que esta cantidad de apariciones es mapeada por un diccionario. Donde la _key_ es el ID del término y el _value_ es la frecuencia de documentos (df) 
+
+* Por la elevada cantidad de tweets,  la creación de los diccionarios demora un tiempo considerable, alrededor de 10 minutos, por lo que estos los guardamos en archivos binarios con ayuda de la librería pickle. 
+
+
+### **2.2 Creación del índice**
+
+En primer lugar, al procesar cada tweet realizamos el parser correspondiente para obtener los términos que nos importan, es decir, eliminando los stopwords y obteniendo la raíz de cada token. Luego de procesar todos los tweets, recién es posible obtener la norma de un tweet  y el peso tf.idf de cada término respecto a ellos. Finalmente, guardamos en archivos binarios todos los diccionarios mencionados en la sección de Observaciones, la cantidad de tweets procesados y la cantidad de términos. Esto se aprecia en el jupyter-notebook del repositorio.
+
+### **2.3 Funciones**
+
+Realizamos una descripción de las funciones que hemos utilizado:
+
+**stopwords_stemmer(text)**
+* Dicha función recibe una cadena de caracteres, dicha cadena pasa por un proceso de tokenización en el que se coloca cada palabra en una lista. Luego, se aplica la función stopwords que retirará las palabras más comunes que no aportan un significado a la búsqueda. Después, aplicamos la función stemmer a cada palabra para obtener la raíz de dicha palabra. Finalmente, retornamos la lista de palabras totalmente filtradas y reducidas a su raíz.
+
+**searchKNN(query, k)**
+* Recibe como parámetro la consulta del usuario y la cantidad de tweets que serán mostrados en el Frontend. Esta función retorna una lista de K tuplas que contiene el id del tweet y la distancia que representa la similitud entre la consulta del usuario y el texto del tweet. 
+
+**retrieve_tweets(query, k)**
+* Para la recuperación de los datos se hace uso de un vector que contiene el id de los K tweets con mayor similitud con respecto a la consulta del usuario. Dicho vector se obtuvo a través de la función _searchKNN()_. Cada id que contiene el vector es pasado a la función retrieve_tweet el cual recibe un id_tweet y retorna toda la información tweet en formato json. Finalmente, retornaremos el arreglo de Json que compone cada tweet que será mostrado en el Frontend.
+
+**retrieve_tweet(docID)**
+* Dicha función recibe un id del tweet a buscar, retornando la información respecto al tweet una vez encontrado en el json.
+
+## **3. Pruebas de rendimiento**
+### **3.1 Experimento**
+A partir de una consulta, realizamos la búsqueda de los _K_ tweets con mayor similitud con respecto a ella. Donde el valor de _K_ se encuentra variando.
+
+* Consulta N°1 = _"Keikoy Fujimori y Pedro Castillo son candidatos a la presidencia"_
+* Consulta N°2 = _"Keiko lidera las encuestas"_
+* Consulta N°3 = _"Pedro Castillo es un comunista"_
+  
+| Consulta \ k | K = 1 | K = 5 | K = 20 | K = 100 | k = 1000 |
+|--------------|-------|-------|--------|---------|----------|
+| Consulta N°1 |       |       |        |         |          |
+| Consulta N°2 |       |       |        |         |          |
+| Consulta N°3 |       |       |        |         |          |
+
+### **3.2 Conclusiones**
+* La búsqueda de los _K_ tweets con mayor similitud es eficiente puesto que no demora mas de x segundos para encontrarlos, a pesar de tener buscar entre 480 mil tweets
+* Asimismo, el tamaño de la consulta no afecta al rendimiento de la búsqueda.
