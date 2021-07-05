@@ -14,7 +14,7 @@ import numpy as np
 from collections import Counter
 import pickle
 
-bin_path = './bin/'
+bin_path = './pythonCode/bin/'
 
 term_termid_dict_file = open(bin_path + "term_termid_dict.dat", "rb")
 tweet_termids_dict_file = open(bin_path + "tweet_termids_dict.dat", "rb")
@@ -100,7 +100,7 @@ def searchKNN(query, k):
 
 
 def retrieve_tweet(docId):
-    json_path = './data/data_elecciones/'
+    json_path = './pythonCode/data/data_elecciones/'
     filenameid = tweet_termids_dict[docId][0]
     filename = filenameid_filename_dict[filenameid]
     with open(json_path + filename, encoding="utf8") as file:
@@ -118,7 +118,7 @@ def retrieve_tweets(query,k):
         res.append(json.loads(retrieve_tweet(docId)))
     return json.dumps(res)
 
-result_data = retrieve_tweets(str(sys.argv[1]),9)
+result_data = retrieve_tweets(str(sys.argv[1]),2)
 result_data = json.loads(result_data)
-with open('result_db.json', 'w') as file:
+with open('./pythonCode/data/result_db.json', 'w') as file:
     json.dump(result_data, file)

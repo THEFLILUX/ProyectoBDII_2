@@ -15,7 +15,14 @@ app.get('/posts', (req, res)=>{
     res.sendFile(path.join(__dirname, 'dist/ang-node/index.html'))
 })
 
+const sleep = (n) => new Promise((res) => setTimeout(res, n));
+
+/*async function start(){
+    await sleep(5000);
+}*/
+
 app.get('/send', (req, res)=>{
+    //start();
     res.sendFile(path.join(__dirname, 'dist/ang-node/index.html'))
     //const obj = JSON.parse(JSON.stringify(req.body));
     /*const obj = JSON.parse(JSON.stringify(req.body));
@@ -34,6 +41,20 @@ app.get('/send', (req, res)=>{
         console.log(`child process exited with code ${code}`);
     });*/
 
+});
+
+app.post('/send/submit', urlencodedParser, function(req, res){
+    const obj = req.body;/*JSON.parse(JSON.stringify(req.body));*/
+    console.log(obj.word)
+    const spawn = require('child_process').spawn;
+    const process = spawn('python', ['./pythonCode/inverted_index.py', obj.word]);
+
+    process.stdout.on('data', data => {
+        console.log("dentro");
+        res.redirect('/send');
+    }).on('end', function() {
+        res.redirect('/send');
+    });
 });
 
 const port = process.env.PORT || 4600;
