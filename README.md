@@ -21,25 +21,31 @@ app.get('/posts', (req, res)=>{
     res.sendFile(path.join(__dirname, 'dist/ang-node/index.html'))
 })
 
+const sleep = (n) => new Promise((res) => setTimeout(res, n));
+
+async function start(){
+    await sleep(5000);
+}
+
 app.get('/send', (req, res)=>{
+    start();
+    console.log("send completed")
     res.sendFile(path.join(__dirname, 'dist/ang-node/index.html'))
-    //const obj = JSON.parse(JSON.stringify(req.body));
-    /*const obj = JSON.parse(JSON.stringify(req.body));
-    //console.log(obj.word);
-    const childPython = spawn('python', ['./pythonCode/inverted_index.py', obj.word])
+});
 
-    childPython.stdout.on('data', (data) => {
-        console.log(`${data}`);
-    });
-    
-    childPython.stderr.on('data', (data) => {
-        console.log(`stderr: ${data}`);
-    });
-    
-    childPython.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-    });*/
+app.post('/send/submit', urlencodedParser, function(req, res){
+    const obj = req.body;
+    console.log(obj.word)
+    const spawn = require('child_process').spawn;
+    const process = spawn('python', ['./pythonCode/inverted_index.py', obj.word]);
 
+    process.stdout.on('data', data => {
+        console.log("dentro");
+        res.redirect('/send');
+    }).on('end', function() {
+        console.log("python completed")
+        res.redirect('/send');
+    });
 });
 
 const port = process.env.PORT || 4600;
@@ -182,6 +188,13 @@ export class AppModule { }
 En una tabla del html, llamamos a cada elemento del JSON para que en cada fila imprima la información de un tweet.
 
 ```
+<div class="container mb-5">
+    <form id="send-form" class="form-inline text-center" method="POST" action="/send/submit">
+      <input class="form-control mr-3" name="word" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-dark" type="submit">Buscar</button>
+    </form>
+</div>
+
 <table class="table table-striped">
     <thead>
       <tr>
@@ -214,7 +227,7 @@ En una tabla del html, llamamos a cada elemento del JSON para que en cada fila i
   </table>
 ```
 
-## **2. BackEnd**
+## **2. Backend**
 
 ### **2.1 Observaciones:**
 * Como estamos trabajando con varios archivos de tipo json, donde cada uno contiene varios tweets, es necesario asignar un identificador a cada archivo. Por lo que, vamos a apoyarnos de un diccionario, donde la _key_ es el identificador del archivo y el _value_ es el nombre del archivo.
